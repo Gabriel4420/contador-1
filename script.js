@@ -5,14 +5,14 @@ const secondsContainer = document.getElementById('segundos')
 const spinnerLoading = document.getElementById('spinner')
 const countdownContainer = document.getElementById('countdown')
 
-const dataInserida =  document.getElementById('data')
-alert(dataInserida)
-const botaoIniciar = document.getElementById('botaoCronometro')
+const Year = new Date().getFullYear();
+if(localStorage.getItem('data') < JSON.stringify(new Date())){
+  console.log('Data Invalida');
+}else{
 
+}
 
-const nextYear = new Date().getFullYear() + 1
-const newDate = new Date(`January 01 ${nextYear} 00:00:00`)
-
+const newDate = new Date(`${localStorage.getItem('data')} 00:00:00`)
 //const getTimeUnit = unit => unit < 10 ? '0'+ unit : unit "AINDA NÃO SEI ESTE MODO DE CRIAÇÃO DE FUNÇÃO"
 
 function unit(unidade){
@@ -20,15 +20,15 @@ function unit(unidade){
 }
 
 const insertCountdownValues = ({days, hours, minutes, seconds}) => {
-  daysContainer.textContent = unit(days)
-  hoursContainer.textContent = unit(hours)
-  minutesContainer.textContent = unit(minutes)
-  secondsContainer.textContent = unit(seconds)
+  daysContainer.textContent = days
+  hoursContainer.textContent = hours
+  minutesContainer.textContent = minutes
+  secondsContainer.textContent = seconds
 }
 
 const updateCountdown = () => {
   const currentTime = new Date()
-  const difference = newDate - currentTime
+  const difference = newDate - currentTime;
   const days = Math.floor(difference / 1000 / 60 / 60 / 24)
   const hours = Math.floor(difference / 1000 / 60 / 60) % 24
   const minutes = Math.floor(difference / 1000 / 60) % 60
@@ -47,7 +47,3 @@ setTimeout(handleCountdownDisplay, 1000) //Remover o spinner depois de 1s.
 
 setInterval(updateCountdown, 1000) //Invoca a função a cada 1s
 
-botaoIniciar.addEventListener('click', function(){
-  const dataSelecionada = new Date(dataInserida.value) //pegar a data inserida
-  alert(dataSelecionada)
-})
